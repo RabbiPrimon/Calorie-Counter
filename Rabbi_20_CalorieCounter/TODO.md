@@ -1,0 +1,12 @@
+=======
+- [x] Create templates directory and update TEMPLATES setting in settings.py
+- [x] Define Calorie Counter models (UserProfile, DailyConsumption)
+- [x] Create views for registration, login, profile, dashboard, add_consumption
+- [x] Create Django forms for user profile and daily consumption
+- [x] Create templates for all views (register, login, profile, dashboard, add_consumption, base)
+- [x] Define URL patterns for the app and project
+- [x] Register models in admin
+- [x] Implement BMR calculation logic in views
+- [x] Set up database migrations and run migrate
+- [x] Fix template loading by updating TEMPLATES DIRS in settings.py
+- [x] Start development server for testing

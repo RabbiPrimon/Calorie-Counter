@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Your Daily Calorie Needs</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="text-primary">{{ bmr }} calories</h3>
+                <p class="card-text">This is your Basal Metabolic Rate (BMR), the number of calories you need to maintain your current weight.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Calories Consumed Today</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="text-success">{{ consumed_today }} calories</h3>
+                <p class="card-text">Total calories consumed today.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Today's Consumptions</h5>
+            </div>
+            <div class="card-body">
+                {% if consumptions %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Calories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for consumption in consumptions %}
+                                <tr>
+                                    <td>{{ consumption.item_name }}</td>
+                                    <td>{{ consumption.calories }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No consumptions recorded today.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <a href="{% url 'add_consumption' %}" class="btn btn-primary btn-lg">Add New Consumption</a>
+    </div>
+</div>
+{% endblock %}
