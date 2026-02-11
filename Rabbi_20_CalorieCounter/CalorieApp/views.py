@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import models
+from django.db.models import Q
 from .forms import UserRegisterForm, UserProfileForm, DailyConsumptionForm
 from .models import UserProfile, DailyConsumption
 from django.utils import timezone
@@ -12,6 +13,11 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data.get('email')
+            User = get_user_model()
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'Email already exists. Please use a different email.')
+                return render(request, 'register.html', {'form': form})
             user = form.save()
             login(request, user)
             messages.success(request, f'Account created for {user.username}!')
@@ -22,9 +28,14 @@ def register(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username_or_email = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        User = get_user_model()
+        try:
+            user = User.objects.get(Q(username=username_or_email) | Q(email=username_or_email))
+            user = authenticate(request, username=user.username, password=password)
+        except User.DoesNotExist:
+            user = None
         if user is not None:
             login(request, user)
             return redirect('dashboard')

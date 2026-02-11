@@ -1,12 +1,14 @@
-=======
-- [x] Create templates directory and update TEMPLATES setting in settings.py
-- [x] Define Calorie Counter models (UserProfile, DailyConsumption)
-- [x] Create views for registration, login, profile, dashboard, add_consumption
-- [x] Create Django forms for user profile and daily consumption
-- [x] Create templates for all views (register, login, profile, dashboard, add_consumption, base)
-- [x] Define URL patterns for the app and project
-- [x] Register models in admin
-- [x] Implement BMR calculation logic in views
-- [x] Set up database migrations and run migrate
-- [x] Fix template loading by updating TEMPLATES DIRS in settings.py
-- [x] Start development server for testing
+# TODO List for Calorie Counter Fixes and Improvements
+
+## Completed Tasks
+- [x] Analyze existing code and identify issues
+- [x] Create plan for fixes
+- [x] Create TODO.md
+- [x] Update CalorieApp/views.py: Modify login_view to accept username or email, fix imports
+- [x] Update templates/login.html: Change label to "Username or Email"
+- [x] Update templates/dashboard.html: Add guidelines for weight management
+- [x] Update static/css/style.css: Enhance styling with better gradients, animations, and mobile responsiveness
+- [x] Run migrations: python manage.py makemigrations && python manage.py migrate
+- [x] Run server: python manage.py runserver
+- [x] Test registration, login with username/email, profile update, dashboard display, add consumption
+- [x] Verify BMR calculations and guidelines

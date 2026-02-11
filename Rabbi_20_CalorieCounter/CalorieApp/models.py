@@ -7,11 +7,11 @@ class UserProfile(models.Model):
         ('F', 'Female'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    age = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    height = models.FloatField()  # in cm
-    weight = models.FloatField()  # in kg
+    name = models.CharField(max_length=100, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
+    height = models.FloatField(null=True, blank=True)  # in cm
+    weight = models.FloatField(null=True, blank=True)  # in kg
 
     def __str__(self):
         return f'{self.user.username} Profile'

@@ -59,6 +59,30 @@
     </div>
 </div>
 <div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Weight Management Guidelines</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    {% if consumed_today < bmr %}
+                        <li><strong>Maintaining Weight:</strong> You're consuming fewer calories than your BMR. To maintain weight, aim to consume around {{ bmr }} calories daily.</li>
+                        {% if consumed_today < bmr|add:-500 %}
+                            <li><strong>Losing Weight:</strong> You're in a calorie deficit. Aim for 500 calories less than BMR ({{ bmr|add:-500 }}) for gradual weight loss.</li>
+                        {% endif %}
+                    {% elif consumed_today > bmr %}
+                        <li><strong>Gaining Weight:</strong> You're consuming more calories than your BMR. To gain weight, continue consuming above {{ bmr }} calories, but monitor for healthy gains.</li>
+                    {% else %}
+                        <li><strong>Maintaining Weight:</strong> Your consumption matches your BMR. This is ideal for weight maintenance.</li>
+                    {% endif %}
+                    <li><strong>General Tips:</strong> Combine calorie tracking with regular exercise and balanced nutrition for best results.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
     <div class="col-md-12 text-center">
         <a href="{% url 'add_consumption' %}" class="btn btn-primary btn-lg">Add New Consumption</a>
     </div>
