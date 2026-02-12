@@ -1,10 +1,5 @@
-# TODO List for Fixing Crispy Forms Error
+# TODO List for Fixing Text Color in Add Consumption Form
 
-- [x] Create requirements.txt with necessary packages (Django, django-crispy-forms, crispy-bootstrap5)
-- [x] Install dependencies using pip install -r requirements.txt
-- [x] Run python manage.py runserver to verify the fix
-
-# TODO List for Fixing Login View Error
-
-- [x] Add 'authenticate' to the import in CalorieApp/views.py
-- [x] Test the login functionality
+- [ ] Edit `templates/add_consumption.html` to add `text-primary` class to the labels for "Food Item", "Calories", and "Quantity"
+- [ ] Verify that the labels appear in blue color after the changes
+- [ ] Test the form functionality to ensure it still works correctly
