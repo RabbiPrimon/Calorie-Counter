@@ -3,88 +3,150 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center mb-4">
+        <h1 class="display-4 text-white font-weight-bold"><i class="fas fa-chart-line"></i> Your Calorie Dashboard</h1>
+        <p class="lead text-white-50">Track your daily intake and stay on top of your health goals</p>
+    </div>
+</div>
+
 <div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Your Daily Calorie Needs</h5>
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100 shadow-lg">
+            <div class="card-header bg-gradient-primary text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-calculator"></i> Your Daily Calorie Needs</h5>
             </div>
-            <div class="card-body">
-                <h3 class="text-primary">{{ bmr }} calories</h3>
-                <p class="card-text">This is your Basal Metabolic Rate (BMR), the number of calories you need to maintain your current weight.</p>
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h2 class="text-primary mb-2">{{ bmr }} <small class="text-muted">calories</small></h2>
+                    <p class="card-text text-muted">This is your Basal Metabolic Rate (BMR), the number of calories you need to maintain your current weight.</p>
+                </div>
+                <div class="ms-3">
+                    <i class="fas fa-fire fa-3x text-primary opacity-50"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Calories Consumed Today</h5>
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100 shadow-lg">
+            <div class="card-header bg-gradient-success text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-utensils"></i> Calories Consumed Today</h5>
             </div>
-            <div class="card-body">
-                <h3 class="text-success">{{ consumed_today }} calories</h3>
-                <p class="card-text">Total calories consumed today.</p>
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <h2 class="text-success mb-2">{{ consumed_today }} <small class="text-muted">calories</small></h2>
+                    <p class="card-text text-muted">Total calories consumed today.</p>
+                    {% if consumed_today > bmr %}
+                        <span class="badge bg-warning text-dark">Above BMR</span>
+                    {% elif consumed_today < bmr %}
+                        <span class="badge bg-info">Below BMR</span>
+                    {% else %}
+                        <span class="badge bg-success">On Track</span>
+                    {% endif %}
+                </div>
+                <div class="ms-3">
+                    <i class="fas fa-chart-pie fa-3x text-success opacity-50"></i>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Today's Consumptions</h5>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow-lg">
+            <div class="card-header bg-gradient-info text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-list"></i> Today's Consumptions</h5>
             </div>
             <div class="card-body">
                 {% if consumptions %}
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Calories</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for consumption in consumptions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
                                 <tr>
-                                    <td>{{ consumption.item_name }}</td>
-                                    <td>{{ consumption.calories }}</td>
+                                    <th><i class="fas fa-utensils"></i> Food Item</th>
+                                    <th><i class="fas fa-weight"></i> Quantity</th>
+                                    <th><i class="fas fa-fire"></i> Calories</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for consumption in consumptions %}
+                                    <tr>
+                                        <td class="fw-bold">{{ consumption.food_item }}</td>
+                                        <td>{{ consumption.quantity }}</td>
+                                        <td><span class="badge bg-primary">{{ consumption.calories }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% else %}
-                    <p>No consumptions recorded today.</p>
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No consumptions recorded today</h5>
+                        <p class="text-muted">Start tracking your meals to see them here!</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
-<div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Weight Management Guidelines</h5>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow-lg">
+            <div class="card-header bg-gradient-warning text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-lightbulb"></i> Weight Management Guidelines</h5>
             </div>
             <div class="card-body">
-                <ul class="list-unstyled">
+                <div class="row">
                     {% if consumed_today < bmr %}
-                        <li><strong>Maintaining Weight:</strong> You're consuming fewer calories than your BMR. To maintain weight, aim to consume around {{ bmr }} calories daily.</li>
+                        <div class="col-md-6 mb-3">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-balance-scale"></i> Maintaining Weight</h6>
+                                <p>You're consuming fewer calories than your BMR. To maintain weight, aim to consume around <strong>{{ bmr }}</strong> calories daily.</p>
+                            </div>
+                        </div>
                         {% if consumed_today < bmr|add:-500 %}
-                            <li><strong>Losing Weight:</strong> You're in a calorie deficit. Aim for 500 calories less than BMR ({{ bmr|add:-500 }}) for gradual weight loss.</li>
+                            <div class="col-md-6 mb-3">
+                                <div class="alert alert-success">
+                                    <h6><i class="fas fa-arrow-down"></i> Losing Weight</h6>
+                                    <p>You're in a calorie deficit. Aim for 500 calories less than BMR (<strong>{{ bmr|add:-500 }}</strong>) for gradual weight loss.</p>
+                                </div>
+                            </div>
                         {% endif %}
                     {% elif consumed_today > bmr %}
-                        <li><strong>Gaining Weight:</strong> You're consuming more calories than your BMR. To gain weight, continue consuming above {{ bmr }} calories, but monitor for healthy gains.</li>
+                        <div class="col-md-6 mb-3">
+                            <div class="alert alert-warning">
+                                <h6><i class="fas fa-arrow-up"></i> Gaining Weight</h6>
+                                <p>You're consuming more calories than your BMR. To gain weight, continue consuming above <strong>{{ bmr }}</strong> calories, but monitor for healthy gains.</p>
+                            </div>
+                        </div>
                     {% else %}
-                        <li><strong>Maintaining Weight:</strong> Your consumption matches your BMR. This is ideal for weight maintenance.</li>
+                        <div class="col-md-6 mb-3">
+                            <div class="alert alert-success">
+                                <h6><i class="fas fa-check-circle"></i> Perfect Balance</h6>
+                                <p>Your consumption matches your BMR. This is ideal for weight maintenance.</p>
+                            </div>
+                        </div>
                     {% endif %}
-                    <li><strong>General Tips:</strong> Combine calorie tracking with regular exercise and balanced nutrition for best results.</li>
-                </ul>
+                    <div class="col-md-6 mb-3">
+                        <div class="alert alert-light border">
+                            <h6><i class="fas fa-star"></i> General Tips</h6>
+                            <p>Combine calorie tracking with regular exercise and balanced nutrition for best results.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row mt-4">
-    <div class="col-md-12 text-center">
-        <a href="{% url 'add_consumption' %}" class="btn btn-primary btn-lg">Add New Consumption</a>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="{% url 'add_consumption' %}" class="btn btn-gradient btn-lg px-5 py-3 shadow-lg">
+            <i class="fas fa-plus-circle fa-lg me-2"></i> Add New Consumption
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -30,6 +30,7 @@ def login_view(request):
     if request.method == 'POST':
         username_or_email = request.POST['username']
         password = request.POST['password']
+        selected_role = request.POST.get('role', 'user')
         User = get_user_model()
         try:
             user = User.objects.get(Q(username=username_or_email) | Q(email=username_or_email))
@@ -37,8 +38,16 @@ def login_view(request):
         except User.DoesNotExist:
             user = None
         if user is not None:
-            login(request, user)
-            return redirect('dashboard')
+            profile = UserProfile.objects.filter(user=user).first()
+            user_role = profile.role if profile else 'user'
+            if selected_role == user_role:
+                login(request, user)
+                if user_role == 'admin':
+                    return redirect('/admin/')
+                else:
+                    return redirect('dashboard')
+            else:
+                messages.error(request, f'You are not authorized to login as {selected_role}. Your account role is {user_role}.')
         else:
             messages.error(request, 'Invalid credentials')
     return render(request, 'login.html')
