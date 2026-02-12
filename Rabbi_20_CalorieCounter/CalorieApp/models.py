@@ -24,6 +24,7 @@ class UserProfile(models.Model):
 class DailyConsumption(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item_name = models.CharField(max_length=200)
+    quantity = models.CharField(max_length=100, default='1', blank=True)
     calories = models.IntegerField()
     date = models.DateField(auto_now_add=True)
 

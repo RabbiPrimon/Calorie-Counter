@@ -15,19 +15,21 @@
                 <form method="post" class="needs-validation" novalidate>
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.food_item.id_for_label }}" class="form-label">
+                        <div class="col-12 mb-3">
+                            <label for="{{ form.item_name.id_for_label }}" class="form-label text-primary">
                                 <i class="fas fa-utensils"></i> Food Item
                             </label>
-                            {{ form.food_item }}
-                            {% if form.food_item.errors %}
+                            {{ form.item_name }}
+                            {% if form.item_name.errors %}
                                 <div class="invalid-feedback d-block">
-                                    {{ form.food_item.errors.0 }}
+                                    {{ form.item_name.errors.0 }}
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="{{ form.calories.id_for_label }}" class="form-label">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.calories.id_for_label }}" class="form-label text-primary">
                                 <i class="fas fa-fire"></i> Calories
                             </label>
                             {{ form.calories }}
@@ -37,8 +39,8 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="{{ form.quantity.id_for_label }}" class="form-label">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.quantity.id_for_label }}" class="form-label text-primary">
                                 <i class="fas fa-weight"></i> Quantity
                             </label>
                             {{ form.quantity }}

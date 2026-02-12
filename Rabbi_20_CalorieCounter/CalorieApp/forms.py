@@ -18,4 +18,9 @@ class UserProfileForm(forms.ModelForm):
 class DailyConsumptionForm(forms.ModelForm):
     class Meta:
         model = DailyConsumption
-        fields = ['item_name', 'calories']
+        fields = ['item_name', 'quantity', 'calories']
+        widgets = {
+            'item_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.TextInput(attrs={'class': 'form-control'}),
+            'calories': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
